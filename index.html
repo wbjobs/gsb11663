@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>浏览器特性检测</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>浏览器特性检测</h1>
+    <p class="subtitle">Feature Detection + Permissions API · 仅检测与展示，不含业务功能</p>
+    <div id="env-banner" class="env-banner" hidden></div>
+    <div class="toolbar">
+      <button id="btn-run" type="button">重新检测</button>
+      <button id="btn-export" type="button">导出结果 (JSON)</button>
+      <button id="btn-toggle-history" type="button">检测历史</button>
+    </div>
+    <div id="env-info" class="env-info"></div>
+  </header>
+
+  <main>
+    <section id="summary" class="summary" aria-live="polite"></section>
+
+    <table class="result-table" id="result-table">
+      <thead>
+        <tr>
+          <th>特性</th>
+          <th>状态</th>
+          <th>可用条件 / 说明</th>
+          <th>降级建议</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="result-body"></tbody>
+    </table>
+
+    <section id="history-panel" class="history-panel" hidden>
+      <h2>检测历史（IndexedDB）</h2>
+      <ul id="history-list"></ul>
+    </section>
+  </main>
+
+  <dialog id="correct-dialog">
+    <form method="dialog" id="correct-form">
+      <h3>修正检测结果</h3>
+      <p>特性：<strong id="correct-feature-name"></strong></p>
+      <p class="hint">如果自动检测结果与你的实际环境不符，可在此修正。修正会保存到 IndexedDB 并在后续检测中优先生效。</p>
+      <label>
+        修正为状态：
+        <select id="correct-status">
+          <option value="supported">支持</option>
+          <option value="partial">部分支持</option>
+          <option value="unsupported">不支持</option>
+          <option value="needs-permission">需要权限</option>
+          <option value="insecure-context">需要安全上下文</option>
+        </select>
+      </label>
+      <label>
+        备注（可选）：
+        <input type="text" id="correct-note" placeholder="例如：公司浏览器禁用了该 API" />
+      </label>
+      <div class="dialog-actions">
+        <button type="submit" value="save">保存修正</button>
+        <button type="button" id="correct-clear">清除修正</button>
+        <button type="button" id="correct-cancel">取消</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/detectors.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
