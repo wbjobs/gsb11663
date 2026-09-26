@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浏览器特性检测工具</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>浏览器特性检测</h1>
+  <p class="env-line" id="envLine"></p>
+</header>
+
+<main>
+  <section class="toolbar">
+    <button id="btnRun" class="btn primary">重新检测</button>
+    <button id="btnExport" class="btn">导出结果 (JSON)</button>
+    <button id="btnCopy" class="btn">复制到剪贴板</button>
+    <label class="filter">
+      筛选：
+      <select id="statusFilter">
+        <option value="">全部状态</option>
+        <option value="supported">支持</option>
+        <option value="partial">部分支持</option>
+        <option value="unsupported">不支持</option>
+        <option value="needs-permission">需要权限</option>
+        <option value="insecure-context">非安全上下文受限</option>
+        <option value="error">检测异常</option>
+      </select>
+    </label>
+  </section>
+
+  <section id="summary" class="summary"></section>
+
+  <section class="card">
+    <h2>检测结果</h2>
+    <table class="result-table" id="resultTable">
+      <thead>
+        <tr>
+          <th>特性</th>
+          <th>状态</th>
+          <th>说明 / 可用条件</th>
+          <th>降级建议</th>
+          <th>修正</th>
+        </tr>
+      </thead>
+      <tbody id="resultBody"></tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>检测历史（IndexedDB）</h2>
+    <div id="historyList" class="history-list"></div>
+  </section>
+</main>
+
+<dialog id="overrideDialog">
+  <form method="dialog" id="overrideForm">
+    <h3 id="overrideTitle">修正检测结果</h3>
+    <p class="hint">如果自动检测结果与实际不符（误判），可在此手动修正。修正记录会保存并在后续检测中生效。</p>
+    <label>修正为：
+      <select id="overrideStatus">
+        <option value="supported">支持</option>
+        <option value="partial">部分支持</option>
+        <option value="unsupported">不支持</option>
+        <option value="needs-permission">需要权限</option>
+        <option value="insecure-context">非安全上下文受限</option>
+      </select>
+    </label>
+    <label>备注：
+      <input type="text" id="overrideNote" placeholder="例如：实测可用，检测误判">
+    </label>
+    <div class="dialog-actions">
+      <button type="submit" class="btn primary" value="save">保存修正</button>
+      <button type="button" class="btn" id="btnClearOverride">清除修正</button>
+      <button type="submit" class="btn" value="cancel">取消</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="features.js"></script>
+<script src="db.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
